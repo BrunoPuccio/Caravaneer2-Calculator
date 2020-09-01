@@ -3,47 +3,64 @@ window.addEventListener('load', () => UpdateTables())
 const UpdateTables = () => {
     UpdateTable(1)
     UpdateTable(2)
+    CompareResults()
 }
 
 const UpdateTable = (id) => {
     const table = document.getElementById(`table${id}`)
     const ag = document.getElementById(`ag${id}`).value
+    const int = document.getElementById(`int${id}`).value
     const startingAp = GetStartingAP(ag)
 
-    while (table.firstChild)
+    while (table.firstChild)//remove all rows
         table.removeChild(table.lastChild)
 
-    for (let index = 8; index < 41; index++) {
-        let newRow = table.insertRow()
+    for (let wantedAp = 8; wantedAp < 41; wantedAp++) {//41 can be increased to see more data
+        const newRow = table.insertRow()
 
-        let apData = newRow.insertCell(0)
-        let apText = document.createTextNode(`${index} AP`)
+        const apData = newRow.insertCell(0)
+        const apText = document.createTextNode(`${wantedAp} AP`)
         apData.appendChild(apText)
 
-        let beData = newRow.insertCell(1)
-        let beText = document.createTextNode(startingAp >= index ? '-' : GetRequiredTurns(ag, index - startingAp, index - 1, id) + ' turns')
+        const turnsData = newRow.insertCell(1)
+        const turnsText = document.createTextNode(startingAp >= wantedAp ? '0' : GetRequiredTurns(ag, wantedAp - startingAp, wantedAp - 1, int) + ' turns')
+        turnsData.appendChild(turnsText)
+
+        const beData = newRow.insertCell(2)
+        const beText = document.createTextNode(startingAp > wantedAp ? 0 : BePerTurn(wantedAp - 1, int) + ' BE')//Battle Experience earned each turn
         beData.appendChild(beText)
     }
 }
 
 const GetStartingAP = (ag) => {
-    let ap = Math.ceil(5 + ag * 1.5)
-    if (document.getElementById('extra1').checked)
+    let ap = Math.ceil(5 + ag * 1.5)//starting ap
+    if (document.getElementById('extra1').checked)//extra ap from morale
         ap++
-    if (document.getElementById('extra2').checked)
+    if (document.getElementById('extra2').checked)//extra ap from low cargo
         ap++
     return ap
 }
 
-const GetRequiredTurns = (ag, extraAp, currentAp, id) => {
-    return parseInt(GetBeRequiredForExtraAp(ag, extraAp) / BePerTurn(currentAp, document.getElementById(`int${id}`).value))
+const CompareResults = () => {
+    let table1 = document.getElementById(`table1`)
+    let table2 = document.getElementById(`table2`)
+
+    if (document.getElementById(`ag2`).value > document.getElementById(`ag1`).value) {
+        let temp = table1
+        table1 = table2
+        table2 = temp
+    }
+    
+    for (let rowPos = 0; rowPos < table1.rows.length; rowPos++) {
+        if (parseInt(table1.rows[rowPos].cells[1].innerHTML) > parseInt(table2.rows[rowPos].cells[1].innerHTML))
+            table2.rows[rowPos].style = 'background-color: greenyellow'
+        else
+            table1.rows[rowPos].style = 'background-color: greenyellow'
+    }
 }
 
-const GetBeRequiredForExtraAp = (ag, extraAP) => {
-    if (ag % 2)
-        return 1600 * (extraAP * extraAP)
-    else
-        return 400 + 1600 * (extraAP * (extraAP - 1))
-}
+const GetRequiredTurns = (ag, extraAp, currentAp, int) => parseInt(GetBeRequiredForExtraAp(ag, extraAp) / BePerTurn(currentAp, int))
 
-const BePerTurn = (ap, int) => .143 * int * ap
+const GetBeRequiredForExtraAp = (ag, extraAp) => ag % 2 ? 1600 * (extraAp * extraAp) : 400 + 1600 * (extraAp * (extraAp - 1))
+
+const BePerTurn = (ap, int) => (.143 * int * ap).toFixed(3)//need more data on this

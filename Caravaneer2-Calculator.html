@@ -5,34 +5,30 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>C2 Calculator</title>
-    <script src='index.js'>
-
-    </script>
+    <script src='index.js'></script>
 </head>
 
 <body>
     <div style='float:left'>
-        AG <input type='number' id='ag1' min='1' max='10' value='1' onchange='UpdateTable(1)'>
+        AG <input type='number' id='ag1' min='1' max='10' value='1' onchange='UpdateTables()'>
         <br><br>
-        INT <input type='number' id='int1' min='1' max='10' value='10' onchange='UpdateTable(1)'>
+        INT <input type='number' id='int1' min='1' max='10' value='10' onchange='UpdateTables()'>
         <br><br>
-        <table id='table1'>
-        </table>
+        <table id='table1' border='1px'></table>
     </div>
 
-    <div style='float:left; margin-left:100px'>
-        AG <input type='number' id='ag2' min='1' max='10' value='4' onchange='UpdateTable(2)'>
+    <div style='float:left; margin-left:50px'>
+        AG <input type='number' id='ag2' min='1' max='10' value='4' onchange='UpdateTables()'>
         <br><br>
-        INT <input type='number' id='int2' min='1' max='10' value='7' onchange='UpdateTable(2)'>
+        INT <input type='number' id='int2' min='1' max='10' value='7' onchange='UpdateTables()'>
         <br><br>
-        <table id='table2'>
-        </table>
+        <table id='table2' border='1px'></table>
     </div>
 
-    <div style='float:left; margin-left:100px'>
-        <input type="checkbox" id="extra1" onchange='UpdateTables()'> Extra Morale AP
+    <div style='float:left; margin-left:50px'>
+        <input type='checkbox' id='extra1' onchange='UpdateTables()'> Extra Morale AP
         <br>
-        <input type="checkbox" id="extra2" onchange='UpdateTables()'> Extra Less Than 50% Cargo AP
+        <input type='checkbox' id='extra2' onchange='UpdateTables()' checked='true'> Extra Less Than 50% Cargo AP
     </div>
 </body>
 
