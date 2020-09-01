@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>C2 Calculator</title>
+    <script src='index.js'>
+
+    </script>
+</head>
+
+<body>
+    <div style='float:left'>
+        AG <input type='number' id='ag1' min='1' max='10' value='1' onchange='UpdateTable(1)'>
+        <br><br>
+        INT <input type='number' id='int1' min='1' max='10' value='10' onchange='UpdateTable(1)'>
+        <br><br>
+        <table id='table1'>
+        </table>
+    </div>
+
+    <div style='float:left; margin-left:100px'>
+        AG <input type='number' id='ag2' min='1' max='10' value='4' onchange='UpdateTable(2)'>
+        <br><br>
+        INT <input type='number' id='int2' min='1' max='10' value='7' onchange='UpdateTable(2)'>
+        <br><br>
+        <table id='table2'>
+        </table>
+    </div>
+
+    <div style='float:left; margin-left:100px'>
+        <input type="checkbox" id="extra1" onchange='UpdateTables()'> Extra Morale AP
+        <br>
+        <input type="checkbox" id="extra2" onchange='UpdateTables()'> Extra Less Than 50% Cargo AP
+    </div>
+</body>
+
+</html>
